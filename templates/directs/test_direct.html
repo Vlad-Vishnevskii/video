@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личное сообщение</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Стили для хедера */
+        header {
+            background-color: #e02c1f;
+            color: white;
+            padding: 1rem 0;
+            font-size: 1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 0.5rem; /* Уменьшаем отступы между элементами меню */
+        }
+
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s ease; /* Добавляем плавный переход цвета */
+        }
+
+        @media (max-width: 600px) {
+            nav ul li a {
+                font-size: 1rem; /* Увеличиваем коэффициент vw для меньших экранов */
+            }
+
+            p {
+                font-size: 15px;
+
+            }
+        }
+
+        @media (max-width: 350px) {
+            nav ul li a {
+                font-size: 0.75rem; /* Увеличиваем коэффициент vw для меньших экранов */
+            }
+        }
+
+        nav ul li a:hover {
+            color: #ccc; /* Меняем цвет текста при наведении */
+            text-decoration: none; /* Удаляем подчеркивание текста при наведении */
+            text-shadow: 0 0 5px #ccc; /* Добавляем легкое свечение текста при наведении */
+        }
+
+        /* Стили для главного контейнера */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Стили для карточек */
+        .card {
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+
+        /* Стили для чата */
+        .chat-messages {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-messages div {
+            display: flex;
+            justify-content: flex-start; /* Выравниваем сообщения по левому краю */
+            margin-bottom: 1rem;
+        }
+
+        .chat-messages div:nth-child(even) {
+            justify-content: flex-end; /* Выравниваем сообщения четных позиций по правому краю */
+        }
+
+        .chat-messages img {
+            margin-right: 0.5rem;
+        }
+
+        form {
+            margin-top: 1rem;
+        }
+
+        .input-group {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        input[type="text"],
+        button {
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+        }
+
+
+        /* Стили для чата */
+        .chat-messages {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-messages div {
+            display: flex;
+            justify-content: flex-start; /* Выравниваем сообщения по левому краю */
+            margin-bottom: 1rem;
+        }
+
+        .chat-messages div:nth-child(even) {
+            justify-content: flex-end; /* Выравниваем сообщения четных позиций по правому краю */
+        }
+
+        .chat-messages img {
+            margin-right: 0.5rem;
+        }
+
+        /* Стили для аватара и даты */
+        .chat-messages div > div {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-messages div > div > div {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .position-relative {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .chat-messages {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-messages div {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .chat-messages div:nth-child(even) {
+            justify-content: flex-end;
+        }
+
+        .chat-messages img {
+            margin-right: 0.5rem;
+        }
+
+        .chat-messages .message-content {
+            background-color: #e0e0e0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            max-width: 70%;
+            margin: 0;
+            word-break: break-all;
+        }
+
+        p {
+            margin: 0;
+
+        }
+
+        .chat-messages .message-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .message-date {
+            margin: 0;
+
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        input[type="text"],
+        button {
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+        }
+
+
+        a.search-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #e02c1f;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a.search-button:hover {
+            background-color: #cc0000;
+        }
+
+        .card.a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 90vw;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            {% url 'home' as url_home %}
+            <li><a href="{{ url_home }}">Главная</a></li>
+            {% if request.user.is_authenticated %}
+
+                {% url 'createmusic' as url_createmusic %}
+                <li><a href="{{ url_createmusic }}">Создание</a></li>
+                <li><a href="/message/inbox/">Чат</a></li>
+                <li><a href="/profile/{{ user.username }}">Профиль</a></li>
+                {% url 'logout' as url_logout %}
+                <li><a href="{{ url_logout }}">Выйти</a></li>
+
+            {% else %}
+                {% url 'login' as url_login %}
+                <li><a href="{{ url_login }}">Авторизация</a></li>
+                {% url 'register' as url_register %}
+                <li><a href="{{ url_register }}">Регистрация</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <div class="card a">
+		
+            <a href="/message/inbox/"><img src="../../media/image/menu.png" height="30px" width="30px"></a>
+            <a><strong>Сообщения</strong></a>
+        </div>
+        <div class="card">
+            <div>
+               <a href="/profile/{{to}}"> <strong
+                                        style="text-decoration: none; color: black">@{{ to }}</strong>
+</a>
+            <div class="position-relative">
+                {% if directs %}
+					<p>{{ meet }}</p>
+                    <div class="chat-messages" id="chat">
+                    {% for direct in directs %}
+						
+					
+						
+                        {% if direct.sender_id != request.user.id %}
+							
+                            <div style="justify-content: flex-start" class="ass">
+								
+                        {% else %}
+						
+                            <div style="justify-content: flex-end" class="ass">
+                        {% endif %}
+                    <div>
+						
+                        {% if direct.user.avatar  %}
+                            
+                        {% else %}
+							
+                            
+                        {% endif %}
+                    </div>
+                    <div class="message-content">
+                        <p>{{ direct.body }}</p>
+						
+                    </div>
+                    <br>
+
+                    </div>
+                        {% if direct.sender_id != request.user.id %}
+                            <div style="justify-content: flex-start">
+                        {% else %}
+                            <div style="justify-content: flex-end">
+                        {% endif %}
+                    <p class="message-date">{{ direct.date|date:"j F Y H:i" }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% else %}
+                    <div class="chat-messages">
+					<p>Вы с {{ meet }} еще не общались...</p>
+                        <p>Вы с {{ to }} еще не общались...</p>
+
+                    </div>
+                {% endif %}
+
+                <form method="POST" action="{% url 'send-message' %}">
+                    {% csrf_token %}
+                    <div class="input-group" id="wrapp">
+                        <input type="hidden" name="to_user" id="" value="{{ active_direct }}">
+                        <input required name="body" type="text" class="form-control"
+                               placeholder="Напишите сообщение и отправьте">
+                        <button class="btn btn-primary" type="submit">📩</button>
+                    </div>
+                </form>
+
+
+                </div>
+                </div>
+            </div>
+            <script src="maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+            <script src="cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+</main>
+
+
+</body>
+ 
+</html>
+<script>
+var block = document.getElementById("chat");
+  block.scrollTop = block.scrollHeight;
+</script>

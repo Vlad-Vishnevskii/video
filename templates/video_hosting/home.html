@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+        {% for video in video_list %}
+        
+    <style>
+		.pr{position: relative;top:10px;padding:7px 4px;background:#fff;border-radius: 3px;color: #000}
+		
+		.p{position:relative}
+		button.unmute{top:10px;padding:7px 4px;background:#fff;border-radius: 3px;color: #000}
+		.cp{cursor: pointer}
+		.button {
+      background-color: #FF4500;
+      border: none;
+      color: white;
+      padding: 20px 34px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      margin: 4px 2px;
+      cursor: pointer;
+      }
+		.video-js {
+		border: 3px;
+    width: 100%;
+    max-width: 400px;
+   }
+   container {border: 3px; background:#fff;border-radius: 3px;color: #000}
+	</style>	
+    
+  
+	
+	
+          <div class="pr" style="text-align: center;">
+		  
+		<a href="{% url 'seedance' %}" class="button">CМОТРЕТЬ</a>
+		
+		</div>
+		<div class="container" style="text-align: center;">	
+          <video 
+          
+          autoplay loop 
+              id="my-video"
+              class="video-js"
+              
+              
+              data-setup="{}"
+          
+            
+            <source src="{% url 'stream' video.id %}" type="video/webm"/>
+			</video>
+			
+		</div>
+		</div>
+          
+        {% endfor %}
+<!--        
+        <script>
+  const videos = document.querySelectorAll('.video-js');
+
+  videos.forEach(video => {
+    video.addEventListener('play', () => {
+      videos.forEach(v => {
+        if (v !== video) {
+          v.pause();
+        }
+      });
+    });
+  });
+ 
+</script>
+
+ <script>
+ var btn=document.querySelector('.unmute'),
+	video=document.querySelector('.video-js');
+ btn.addEventListener('click', function (e) {
+	e.preventDefault();
+	btn.innerText='Включить звук';
+	video.muted=false;
+	setTimeout(function () {
+			btn.remove()
+			}, 2000)
+	});
+	
+	
+	<div class="pr" style="text-align: center;">
+			<button class="pr cp unmute">Включить звук</button>
+			</div>
+			
+			preload="none"
+	-->
+	
+	</script>
+<script>
+var btn1=document.querySelector('.fadeButton')
+ btn1.addEventListener('click', function (e) {
+	location.reload();
+	});
+</script>
+
+{% endblock content %}

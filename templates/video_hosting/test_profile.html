@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Стили для хедера */
+        header {
+            background-color: #e02c1f;
+            color: white;
+            padding: 1rem 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 0.5rem; /* Уменьшаем отступы между элементами меню */
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem; /* Устанавливаем начальный размер текста */
+            transition: color 0.3s ease; /* Добавляем плавный переход цвета */
+        }
+        
+        @media (max-width: 600px) {
+            nav ul li a {
+                font-size: 1rem; /* Увеличиваем коэффициент vw для меньших экранов */
+            }
+        }
+        
+        @media (max-width: 350px) {
+            nav ul li a {
+                font-size: 0.75rem; /* Увеличиваем коэффициент vw для меньших экранов */
+            }
+        }
+
+        nav ul li a:hover {
+            color: #ccc; /* Меняем цвет текста при наведении */
+            text-decoration: none; /* Удаляем подчеркивание текста при наведении */
+            text-shadow: 0 0 5px #ccc; /* Добавляем легкое свечение текста при наведении */
+        }
+        
+        main {
+            padding: 1rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        /* Стили для изображения профиля */
+        .rounded-circle {
+            border-radius: 50%;
+            border: 2px solid #e02c1f;
+            margin-bottom: 1rem;
+        }
+        
+        /* Стили для текста */
+        p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+        
+        /* Стили для ссылок */
+        a {
+            text-decoration: none;
+            color: #e02c1f;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: #000;
+        }
+        
+        /* Стили для кнопок */
+        .edit-link, .text-link, .sub-link, .unsub-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border: 2px solid #e02c1f;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .edit-link:hover, .text-link:hover, .sub-link:hover, .unsub-link:hover {
+            background-color: #e02c1f;
+            color: #fff;
+        }
+        
+        /* Стили для статистики профиля */
+        .textcols {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            flex-wrap: nowrap; /* Запрещаем перенос строк */
+        }
+        
+        .textcols-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .textcols-item p {
+            margin: 0;
+            color: #333;
+        }
+        
+        /* Стили для видео галереи */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .video-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between; /* Разделяем элементы равномерно */
+        }
+        
+        .video-column {
+            flex: 0 1 calc(33.333% - 1rem); /* 3 колонки в строке с учетом отступов */
+            max-width: calc(33.333% - 1rem);
+            box-sizing: border-box; /* Учитываем padding и margin */
+        }
+        
+        .video-block {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .watch-button-link {
+            display: block;
+            padding: 0.5rem 0;
+        }
+        
+        .watch-button {
+            border: none;
+            background-color: #e02c1f;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .watch-button:hover {
+            background-color: #333;
+        }
+        
+        .floating-button {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 60px;
+        height: 60px;
+        background-color: #e02c1f;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        z-index: 1000; /* Поверх всех других элементов */
+    }
+    
+    .floating-button:hover {
+        background-color: #333;
+        transform: scale(1.1); /* Увеличиваем кнопку при наведении */
+    }
+    
+    
+        
+            /* Адаптивные стили */
+    @media (max-width: 768px) {
+        .video-column {
+            flex: 0 1 calc(33.333% - 1rem); /* Сохраняем 3 колонки в строке */
+            max-width: calc(33.333% - 1rem);
+        }
+    
+        /* Уменьшается размер кнопки и шрифта на экранах меньше 768px */
+        .watch-button {
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .floating-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .video-column {
+            flex: 0 1 calc(33.333% - 1rem); /* Сохраняем 3 колонки в строке */
+            max-width: calc(33.333% - 1rem);
+        }
+    
+        .watch-button {
+            padding: 0.3rem 0.75rem; /* Ещё больше уменьшаем кнопку */
+            font-size: 0.85rem;
+            border-radius: 20px; /* Более компактные округлые края */
+        }
+    
+        .edit-link, .text-link, .sub-link, .unsub-link {
+            width: 100%;
+            padding: 0.7rem 0;
+            font-size: 1rem;
+        }
+        floating-button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        bottom: 1rem;
+        right: 1rem;
+        }
+    }
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            {% url 'home' as url_home %}
+            <li><a href="{{ url_home }}">Главная</a></li>
+            {% if request.user.is_authenticated %}
+
+                {% url 'createmusic' as url_createmusic %}
+                <li><a href="{{ url_createmusic }}">Создание</a></li>
+                <li><a href="/message/inbox/">Чат</a></li>
+                <li><a href="/profile/{{ user.username }}">Профиль</a></li>
+                {% url 'logout' as url_logout %}
+                <li><a href="{{ url_logout }}">Выйти</a></li>
+
+            {% else %}
+                {% url 'login' as url_login %}
+                <li><a href="{{ url_login }}">Авторизация</a></li>
+                {% url 'register' as url_register %}
+                <li><a href="{{ url_register }}">Регистрация</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<main>
+    {% if user.avatar %}
+        <img class='rounded-circle' src="{{ user.avatar.url }}" width=100>
+    {% else %}
+        <img class='rounded-circle' src="../../media/image/user.png" height=100 width=100>
+    {% endif %}
+	<p>{{ user.username }}</p>
+	
+	{% if user.birdday == None %}
+	<p>{{ user.birdday }}</p>
+	{% else %}
+	<p>{{ user.birdday }}</p>
+	
+	{% endif %}
+	
+    
+	{% if user.gender == None %}
+	<p>{{ user.gender }}</p>
+	{% else %}
+	<p>{{ user.gender }} </p>
+	
+	{% endif %}
+        {% if request.user.is_authenticated and request.user.username == user.username %}
+            <section>
+                <div class="links-container">
+                    <a class="edit-link" href="{% url 'edit_profile' user.id %}">Редактировать</a><br><br>
+                </div>
+            </section>
+			<a href="/create_video/" class="floating-button">+</a>
+        {% else %}
+            
+                
+            
+        {% endif %}
+                {% if request.user.is_authenticated and request.user.username != user.username %}
+					<section>
+                <div class="links-container">
+                    <a class="text-link" href="{% url 'directs' user.username %}">Написать</a>
+					<a class="text-link" href="{% url 'send_request' user.id %}">Пригласить</a>
+					
+                    {% if follow_status == True %}
+                        <a class="sub-link" href="{% url 'follow' user.username 0 %}">Отписаться</a>
+                    {% else %}
+                        <a class="unsub-link" href="{% url 'follow' user.username 1 %}">Подписаться</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+
+    <div class="textcols">
+        <div class="textcols-item">
+            <p style="text-align: center;"><b>{{ post_count }}</b></p>
+            <p style="text-align: center;"><b>Видео</b></p>
+        </div>
+        <div class="textcols-item">
+            <p style="text-align: center;"><b>{{ followers_count }}</b></p>
+            <p style="text-align: center;"><b>Подписчики</b></p>
+        </div>
+        <div class="textcols-item">
+            <p style="text-align: center;"><b>{{ following_count }}</b></p>
+            <p style="text-align: center;"><b>Подписки</b></p>
+        </div>
+    </div>
+</main>
+<div class="container">
+    <div class="video-row">
+        {% for video in video_list.all %}
+            <div class="video-column">
+			
+                <section class="video-block">
+				
+                   
+                    <a class="watch-button-link" href="{% url 'videomain' video.id %}">
+                        <button class="watch-button"><img src="{{ video.image.url }}" width="100%" height="100%" class="gallery-image"></button>
+                    </a>
+                   
+                </section>
+			
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+
+
+</body>
+</html>
