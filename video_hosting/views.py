@@ -316,7 +316,30 @@ def respond_request(request, request_id, action):
         messages.success(request, 'False!')
     else:   
         return HttpResponseRedirect(reverse('profile', args=[username]))
-    return render(request, 'test_home.html')     
+    return render(request, 'test_home.html')
+
+@login_required
+def handle_request(request):
+    # Получить параметры из запроса
+    action = request.GET.get('action')
+    user_id = request.GET.get('user_id')
+
+    # Найти запрос в базе данных
+    meeting_request = get_object_or_404(MeetingRequest, from_user_id=user_id, to_user=request.user)
+
+    if action == 'accept':
+        # Логика для принятия запроса
+        meeting_request.status = 'accepted'
+        meeting_request.save()
+        return JsonResponse({'status': 'success', 'message': f'Запрос от пользователя {meeting_request.from_user} принят.'})
+    elif action == 'decline':
+        # Логика для отклонения запроса
+        meeting_request.status = 'declined'
+        meeting_request.save()
+        return JsonResponse({'status': 'success', 'message': f'Запрос от пользователя {meeting_request.from_user} отклонен.'})
+    else:
+        # Если action неизвестен
+        return JsonResponse({'status': 'error', 'message': 'Некорректное действие.'}, status=400)     
     
 
 # edit profile

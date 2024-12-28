@@ -77,4 +77,5 @@ urlpatterns = [
     path('logout/', views.MyprojectLogoutView.as_view(), name='logout'),
     path('video/<int:pk>/like/', views.AddLike.as_view(), name='like'),
     path('video/<int:pk>/dislike/', views.AddDislike.as_view(), name='dislike'),
+    path('handle-request/', views.handle_request, name='handle_request'),
 ]

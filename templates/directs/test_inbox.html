@@ -265,8 +265,8 @@
             <p>Хотите принять запрос на переписку?</p>
         </div>
         <div class="request-buttons">
-            <a href="/message/directs/{{ incomingMeet.from_user }}" class="btn-accept">Принять</a>
-            <a href="#" class="btn-decline">Отклонить</a>
+            <a href="{% url 'handle_request' %}?action=accept&user_id={{ incomingMeet.from_user.id }}" class="btn-accept">Принять</a>
+            <a href="{% url 'handle_request' %}?action=decline&user_id={{ incomingMeet.from_user.id }}" class="btn-decline">Отклонить</a>
         </div>
     </div>
     {% endif %}
@@ -323,5 +323,31 @@
 			{% endfor %}
     </div>
 </main>
+<script>
+    document.querySelectorAll('.btn-accept, .btn-decline').forEach(button => {
+    button.addEventListener('click', function (event) {
+        event.preventDefault();
+        const url = this.href;
+
+
+        fetch(url, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    if (url.includes('accept')) {
+                        window.location.href = '/message/directs/{{ incomingMeet.from_user }}';
+                    } else {
+                        window.location.reload();
+                    }
+                } else {
+                    console.error('Ошибка: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+    });
+});
+</script>
 </body>
 </html>
