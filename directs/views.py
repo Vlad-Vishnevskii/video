@@ -29,7 +29,8 @@ def inbox(request):
     users_paginator = paginator.get_page(page_number)
     paginator1 = Paginator(users1, 8)
     page_number1 = request.GET.get('page')
-    users_paginator1 = paginator1.get_page(page_number1)   
+    users_paginator1 = paginator1.get_page(page_number1)
+    incomingMeet = MeetingRequest.objects.filter(to_user=user, status="send").order_by("-created_at").first()   
     to = request.path
     to = to.split('/')[-1]
     print(messages)
@@ -63,6 +64,7 @@ def inbox(request):
             'request': request,
             'users': users_paginator,
             'users1': users_paginator1,
+            'incomingMeet': incomingMeet,
         }
 
         return render(request, 'directs/test_inbox.html', context)
@@ -77,6 +79,7 @@ def inbox(request):
             'request': request,
             'users': users_paginator,
             'users1': users_paginator1,
+            'incomingMeet': incomingMeet,
         }
         return render(request, 'directs/test_inbox.html', context)
 

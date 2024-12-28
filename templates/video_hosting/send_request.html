@@ -2,14 +2,120 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Отправить запрос</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #d32f2f;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .request-list {
+            padding: 20px;
+        }
+
+        .request-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .request-item:last-child {
+            border-bottom: none;
+        }
+
+        .request-item p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .request-buttons button {
+            text-decoration: none;
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .btn-accept {
+            background-color: #388e3c;
+        }
+
+        .btn-accept:hover {
+            background-color: #2e7d32;
+        }
+
+        .btn-send {
+            background-color: #c62828;
+        }
+
+        .btn-send:hover {
+            background-color: #b71c1c;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Отправить запрос на встречу</h1>
+    <!-- <h1>Отправить запрос на встречу</h1>
     <form method="post">
         {% csrf_token %}
         <p>Поддтверждение запроса на встречу {{ to_user.username }}?</p>
         <button type="submit">Отправить</button>
+    </form> -->
+    <form method="post" class="container">
+        {% csrf_token %}
+        <div class="header">
+            <h1>Отправить запрос на встречу</h1>
+        </div>
+        <div class="request-list">
+            <div class="request-item">
+                <p><strong>Пользователь:</strong> {{ to_user.username }}</p>
+                <div class="request-buttons">
+                    <button type="submit" class="btn-send">Отправить</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            &copy; 2024 Ваш проект. Все права защищены.
+        </div>
     </form>
 </body>
 </html>

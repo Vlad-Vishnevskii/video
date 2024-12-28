@@ -128,6 +128,104 @@
             background-color: #e0e0e0;
             border: 1px solid #e0e0e0;
         }
+
+        .meet-requests {
+            gap: 20px;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .meet-requests_btn {
+            border: none;
+            background: #e02c1f;
+            padding: 8px 14px;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .meet-requests_btn--cancel {
+            background: #f0f0f0;
+            color: black;
+        }
+
+        .request-block {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .request-header {
+            background-color: #e02c1f;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .request-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .request-content p {
+            font-size: 16px;
+            margin: 10px 0 20px;
+            color: #333;
+        }
+
+        .request-buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 10px 20px;
+        }
+
+        .request-buttons a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-accept {
+            background-color: #388e3c;
+        }
+
+        .btn-accept:hover {
+            background-color: #2e7d32;
+        }
+
+        .btn-decline {
+            background-color: #e02c1f;
+        }
+
+        .btn-decline:hover {
+            background-color: #b71c1c;
+        }
+
+        .request-footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #777;
+            border-top: 1px solid #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -156,10 +254,26 @@
 </header>
 <main>
     <h1>Все чаты</h1>
-	
+
+    {% if incomingMeet %}
+    <div class="request-block">
+        <div class="request-header">
+            Новый запрос на переписку
+        </div>
+        <div class="request-content">
+            <p>Пользователь: <strong>{{ incomingMeet.from_user }}</strong></p>
+            <p>Хотите принять запрос на переписку?</p>
+        </div>
+        <div class="request-buttons">
+            <a href="/message/directs/{{ incomingMeet.from_user }}" class="btn-accept">Принять</a>
+            <a href="#" class="btn-decline">Отклонить</a>
+        </div>
+    </div>
+    {% endif %}
        
 
     <div class="chat-list">
+
     {% if chats %}
         {% for k, v in chats.items %}
             <div class="chat-item">
