@@ -299,7 +299,7 @@
 </a>
             <div class="position-relative">
                 {% if directs %}
-					<p>{{ meet }}</p>
+					<!-- <p>{{ meet }}</p> -->
                     <div class="chat-messages" id="chat">
                     {% for direct in directs %}
 						
@@ -347,12 +347,12 @@
                     </div>
                 {% endif %}
 
-                <form method="POST" action="{% url 'send-message' %}">
+                <form method="POST" class="message_form" action="{% url 'send-message' %}">
                     {% csrf_token %}
                     <div class="input-group" id="wrapp">
                         <input type="hidden" name="to_user" id="" value="{{ active_direct }}">
-                        <input required name="body" type="text" class="form-control"
-                               placeholder="Напишите сообщение и отправьте">
+                        <input required name="body" type="text" class="form-control message"
+                               placeholder="Напишите сообщение и отправьте" value="">
                         <button class="btn btn-primary" type="submit">📩</button>
                     </div>
                 </form>
@@ -372,5 +372,20 @@
 </html>
 <script>
 var block = document.getElementById("chat");
-  block.scrollTop = block.scrollHeight;
+//   block.scrollTop = block.scrollHeight; // ломает скрипт
+const messageInput = document.querySelector('.message');
+const form = document.querySelector('.message_form');
+
+function clearQueryParams() {
+  const url = new URL(window.location.href);
+  url.search = '';
+
+  window.history.pushState({}, '', url);
+}
+
+if (window.location.search.includes('autoMessage')) {
+    clearQueryParams();
+    messageInput.value = '{{ to }}, привет!';
+    form.submit();
+}
 </script>
