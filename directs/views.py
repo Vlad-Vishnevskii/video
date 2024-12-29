@@ -91,8 +91,11 @@ def Directs(request, username):
     directs.update(is_read=True)
     to = request.path
     
+    
+
     to = to.split('/')[-1]
     meet = MeetingRequest.objects.filter(from_user=user).values("to_user").order_by("-created_at")
+    Message.objects.filter(user=user, is_read=False).update(is_read=True)
     
     for message in messages:
         if message['user'].username == username:
