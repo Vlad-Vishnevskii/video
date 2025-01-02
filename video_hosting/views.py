@@ -139,6 +139,7 @@ def Profile(request, username):
     followers_count = FollowersCount.objects.filter(follower=user).count()
     
     follow_status = FollowersCount.objects.filter(follower=user, user=request.user).exists()
+    is_request_meet_enable = not MeetingRequest.objects.filter(to_user=user, status__in=["send", "accepted"]).exists()
     
     context = {
        'user': user,
@@ -150,6 +151,7 @@ def Profile(request, username):
        'following_count' : following_count, 
        'followers_count' : followers_count, 
        'follow_status' : follow_status,
+       'is_request_meet_enable' : is_request_meet_enable,
     }
     if not request.user.is_authenticated:
         return render(request, 'video_hosting/test_profile.html', context)

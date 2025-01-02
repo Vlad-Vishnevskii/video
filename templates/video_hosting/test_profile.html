@@ -354,8 +354,9 @@
 					<section>
                 <div class="links-container">
                     <a class="text-link" href="{% url 'directs' user.username %}">Написать</a>
-					<a class="text-link" href="{% url 'send_request' user.id %}">Пригласить</a>
-					
+                    {% if is_request_meet_enable == True %}
+					    <a class="text-link" href="{% url 'send_request' user.id %}">Пригласить</a>
+					{% endif %}
                     {% if follow_status == True %}
                         <a class="sub-link" href="{% url 'follow' user.username 0 %}">Отписаться</a>
                     {% else %}
