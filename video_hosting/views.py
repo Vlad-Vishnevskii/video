@@ -128,10 +128,13 @@ def Profile(request, username):
     video = Video
     current_user = request.GET.get('username')
     logged_in_user = request.user.username
+    current_user_id = request.user.id
     user = get_object_or_404(User, username=username)
     video_list = Video.objects.filter(author=user.id)
     birdday = user.birdday
     
+
+    print(f"Current user from GET: {current_user}")
     
     # статистика пользователя
     post_count = Video.objects.filter(author=user.id).count()
@@ -139,7 +142,7 @@ def Profile(request, username):
     followers_count = FollowersCount.objects.filter(follower=user).count()
     
     follow_status = FollowersCount.objects.filter(follower=user, user=request.user).exists()
-    is_request_meet_enable = not MeetingRequest.objects.filter(to_user=user, status__in=["send", "accepted"]).exists()
+    is_request_meet_enable = not MeetingRequest.objects.filter(from_user=current_user_id, to_user=user, status__in=["send", "accepted"]).exists()
     
     context = {
        'user': user,
