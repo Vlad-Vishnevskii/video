@@ -32,6 +32,7 @@ import math
 from PIL import Image
 import numpy
 import moviepy.editor as mp
+from datetime import date
 from moviepy.editor import *
 
 
@@ -123,6 +124,12 @@ def ViewProfile(request, pk : int):
     else:
     
         return render(request, 'video_hosting/user_profile.html', context)
+    
+def calculate_age(birth_date):
+    today = date.today()
+    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+
+    return age
         
 def Profile(request, username):
     video = Video
@@ -132,7 +139,7 @@ def Profile(request, username):
     user = get_object_or_404(User, username=username)
     video_list = Video.objects.filter(author=user.id)
     birdday = user.birdday
-    
+    age = calculate_age(user.birdday)
 
     print(f"Current user from GET: {current_user}")
     
@@ -147,6 +154,7 @@ def Profile(request, username):
     context = {
        'user': user,
        'birdday': birdday,
+       'age': age,
        'video_list': video_list,
        'current_user': current_user, 
        'logged_in_user' : logged_in_user,
